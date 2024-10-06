@@ -1,4 +1,49 @@
 /**
+ * Default configuration for the autoindex page
+ * Values here will be used if not overridden by the user's configuration.
+ */
+const AUTOINDEX_CONFIG_DEFAULTS = {
+    siteTitle: 'AutoIndex Plus',
+    fileTypes: {
+        // Individual file types
+        pdf: ['pdf'],
+        xlsx: ['xlsx', 'xls'],
+        docx: ['docx', 'doc'],
+        pptx: ['pptx', 'ppt'],
+        csv: ['csv'],
+
+        // I'm sure I could continue forever with this
+        code: ['json', 'xml', 'yaml', 'yml', 'ini', 'cfg', 'conf', 'html', 'htm', 'sql'],
+
+        // Grouped file types
+        archive: ['zip', 'tar', 'gz', 'bz2', 'xz', '7z', 'rar'],
+        audio: ['mp3', 'wav', 'ogg', 'flac', 'm4a', 'wma', 'aac', 'aiff', 'ape', 'alac'],
+        document: ['odt', 'ods', 'odp', 'txt', 'rtf'],
+        image: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'tif', 'tiff', 'avif', 'heic', 'jxl'],
+        text: ['log', 'md', 'markdown', 'txt'],
+        video: ['mp4', 'webm', 'mkv', 'avi', 'mov', 'flv', 'wmv', 'mpg', 'mpeg', 'm4v'],
+    },
+    fileIcons: {
+        pdf: 'fa-file-pdf',
+        xlsx: 'fa-file-excel',
+        docx: 'fa-file-word',
+        pptx: 'fa-file-powerpoint',
+        csv: 'fa-file-csv',
+        code: 'fa-file-code',
+
+        archive: 'fa-file-zipper',
+        audio: 'fa-file-audio',
+        document: 'fa-file-lines',
+        image: 'fa-image',
+        // Same as document for now
+        text: 'fa-file-lines',
+        video: 'fa-video',
+    },
+    dateTimeLocale: null,
+    showCredits: false,
+};
+
+/**
  * Format bytes into a human readable format
  *
  * @param {Number} bytes
@@ -63,47 +108,6 @@ function resolveFileIcon(config, file)
 
     return defaultIcon;
 }
-
-const AUTOINDEX_CONFIG_DEFAULTS = {
-    siteTitle: 'NGINX Autoindex',
-    fileTypes: {
-        // Individual file types
-        pdf: ['pdf'],
-        xlsx: ['xlsx', 'xls'],
-        docx: ['docx', 'doc'],
-        pptx: ['pptx', 'ppt'],
-        csv: ['csv'],
-
-        // I'm sure I could continue forever with this
-        code: ['json', 'xml', 'yaml', 'yml', 'ini', 'cfg', 'conf', 'html', 'htm', 'sql'],
-
-        // Grouped file types
-        archive: ['zip', 'tar', 'gz', 'bz2', 'xz', '7z', 'rar'],
-        audio: ['mp3', 'wav', 'ogg', 'flac', 'm4a', 'wma', 'aac', 'aiff', 'ape', 'alac'],
-        document: ['odt', 'ods', 'odp', 'txt', 'rtf'],
-        image: ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'tif', 'tiff', 'avif', 'heic', 'jxl'],
-        text: ['log', 'md', 'markdown', 'txt'],
-        video: ['mp4', 'webm', 'mkv', 'avi', 'mov', 'flv', 'wmv', 'mpg', 'mpeg', 'm4v'],
-    },
-    fileIcons: {
-        pdf: 'fa-file-pdf',
-        xlsx: 'fa-file-excel',
-        docx: 'fa-file-word',
-        pptx: 'fa-file-powerpoint',
-        csv: 'fa-file-csv',
-        code: 'fa-file-code',
-
-        archive: 'fa-file-zipper',
-        audio: 'fa-file-audio',
-        document: 'fa-file-lines',
-        image: 'fa-image',
-        // Same as document for now
-        text: 'fa-file-lines',
-        video: 'fa-video',
-    },
-    dateTimeLocale: null,
-    showCredits: false,
-};
 
 /**
  * Helper function to merge the config objects

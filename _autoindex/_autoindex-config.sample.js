@@ -1,3 +1,4 @@
+// The defaults can be found in the top of the `_autoindex-functions.js` file.
 const AUTOINDEX_CONFIG = {
     siteTitle: 'AutoIndex Plus',
 
@@ -54,7 +55,7 @@ const AUTOINDEX_CONFIG = {
     dateTimeLocale: null,
 
     /**
-     * Show credits in the footer to the GitHub repository.
+     * Show credits in the footer to the git repository.
      * Disabled by default, but enabling it would be one way to support the project :)
      */
     showCredits: false,

@@ -14,7 +14,7 @@ AutoIndex Plus is an alternative to the default autoindex module of NGINX. It's 
 - All of the logic for parsing and rendering the directory listing happens using frontend JavaScript. Browsers without JavaScript enabled will not be able to see the directory listing.
     - For my personal use case, this is a perfectly acceptable limitation. I don't expect people to be browsing with JavaScript disabled.
 - The directory where the autoindex files are located is expected to be under `/_autoindex` of the document root.
-    - I don't think there's any good way to get around this, besides either a rewrite rule in NGINX or by editing the HTML/JS files.
+    - I don't think there's any good way to get around this, besides either a rewrite rule in NGINX or by editing the HTML/JS files. The latter option would have to be re-applied on every update of AutoIndex Plus.
 
 ## Theming
 
