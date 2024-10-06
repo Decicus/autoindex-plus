@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <!-- PicoCSS - See the README for theming options -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.pumpkin.min.css" integrity="sha256-XYaffJhxOX5Q1ZRkQKQpecNkRUFgqU3rlw0hGGp46PQ=" crossorigin="anonymous">
+
+    <!-- Font Awesome, used for file type icons and similar -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+    <script type="text/javascript" src="/_autoindex/_autoindex-config.js"></script>
+
+    <style type="text/css">
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <hgroup>
+            <h1 id="page-title"></h1>
+            <p id="index-path"></p>
+        </hgroup>
+    </header>
+    <main class="container-fluid">
+        <table class="hidden" id="main-table">
+            <thead>
+                <tr>
+                    <th id="name-header">
+                        <i class="fa-solid fa-folder-tree fa-fw"></i> Directory / File <i class="sort-icon fa-solid fa-fw fa-sort"></i>
+                    </th>
+                    <th id="size-header">
+                        <i class="fa-solid fa-hard-drive fa-fw"></i> Size <i class="sort-icon fa-solid fa-fw fa-sort"></i>
+                    </th>
+                    <th id="modified-header">
+                        <i class="fa-solid fa-clock fa-fw"></i> Last Modified <i class="sort-icon fa-solid fa-fw fa-sort"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="file-listing"></tbody>
+        </table>
+    </main>
+
+    <footer class="container-fluid">
+        <p class="hidden" id="author-credits">Powered by <a href="https://github.com/Decicus/autoindex-plus" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github fa-fw"></i> AutoIndex Plus</a></p>
+    </footer>
+
+    <noscript id="noscript-alert">
+        <div class="container">
+            <p class="alert alert-error">JavaScript is required to view this page properly.</p>
+        </div>
+    </noscript>
+
+    <script type="text/javascript" src="/_autoindex/_autoindex-functions.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', autoIndexInit);
+    </script>
+    <script id="autoindex-listing" type="application/json">

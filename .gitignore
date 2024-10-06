@@ -1,0 +1,7 @@
+*
+!_autoindex
+!_autoindex/*
+_autoindex/_autoindex-config.js
+
+!README.md
+!.gitignore
