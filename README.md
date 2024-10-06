@@ -19,7 +19,7 @@ AutoIndex Plus is an alternative to the default autoindex module of NGINX. It's 
 ## Theming
 
 > [!IMPORTANT]
-> At the moment, the only way to change the theme is by editing the HTML files directly.
+> At the moment, the only way to change the theme is by editing the HTML files directly.  
 > This means that every time you update AutoIndex Plus, you will need to reapply your changes.
 
 AutoIndex Plus uses [Pico CSS](https://picocss.com/) for styling. If you wish to use a different theme, you can change the `<link>` tag in the [`_header.html`](./_autoindex/_header.html) file.
@@ -27,7 +27,7 @@ AutoIndex Plus uses [Pico CSS](https://picocss.com/) for styling. If you wish to
 The [Pumpkin theme](https://picocss.com/docs/version-picker/pumpkin) is used by default. You can use the [Pico CSS version picker](https://picocss.com/docs/version-picker) to find a theme that you like, then replace the existing `<link>` tag with the one in the "Usage from CDN" section.
 
 > [!TIP]
-> If you know what you're doing, it's recommended to grab the corresponding theme from [jsDelivr](https://www.jsdelivr.com/package/npm/@picocss/pico?tab=files&path=css) and use [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) to ensure the file hasn't been tampered with when loading into your page.
+> If you know what you're doing, it's recommended to grab the corresponding theme from [jsDelivr](https://www.jsdelivr.com/package/npm/@picocss/pico?tab=files&path=css) and use [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) to ensure the file hasn't been tampered with when loading into your page.  
 > Find the corresponding `pico.<theme>.min.css` file, click on the "Copy to clipboard" icon and select "Copy HTML + SRI".
 
 ## Installation
