@@ -46,6 +46,21 @@ const AUTOINDEX_CONFIG = {
     },
 
     /**
+     * Files and directories to ignore in the listing. This is currently a fairly simple implementation.
+     * Note that this does not prevent people from finding the files if they know the URL.
+     *
+     * These are matched exactly against their file or directory name, ignoring preceding and trailing paths.
+     * Matches are case-sensitive. `example.txt` is *NOT* the same as `EXAMPLE.txt`.
+     *
+     * For example: If you have a file under `notes/example.txt`, you would add `example.txt` to this list.
+     * Keep in mind that any other files named `example.txt` in other directories would also be ignored.
+     */
+    ignoreEntries: [
+        // By default we ignore the `_autoindex` directory, to prevent it from showing up in your listing. If you want to show it, just remove the line below
+        '_autoindex',
+    ],
+
+    /**
      * Locale used for date and time formatting.
      * By default, the browser locale of the visitor is used.
      *

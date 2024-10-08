@@ -16,6 +16,33 @@ AutoIndex Plus is an alternative to the default autoindex module of NGINX. It's 
 - The directory where the autoindex files are located is expected to be under `/_autoindex` of the document root.
     - I don't think there's any good way to get around this, besides either a rewrite rule in NGINX or by editing the HTML/JS files. The latter option would have to be re-applied on every update of AutoIndex Plus.
 
+## Installation
+
+1. Clone this repository to your server.
+2. Copy the `_autoindex` directory to the root of your website.
+3. Inside the `_autoindex` directory, copy the `_autoindex-config.sample.js` to a new file: `_autoindex-config.js`
+    - Optinally, you can change the configuration values in this new file to your liking.
+4. Add the following to your NGINX configuration file:
+
+```nginx
+# Note that `/media` should be replaced with the directory you want to enable AutoIndex Plus on.
+# The preceding `~` is a regex match, so it will match `/media`, `/media/`, `/media/anything`, etc.
+# The trailing `(.*)/$` is a regex capture group, which will capture all directories inside `/media`. This is necessary to make the autoindex work properly on subdirectories.
+location ~ /media(.*)/$ {
+    autoindex on;
+    autoindex_format json;
+    addition_types application/json;
+
+    add_before_body /_autoindex/_header.html;
+    add_after_body /_autoindex/_footer.html;
+
+    add_header Content-Type "text/html; charset=utf-8";
+}
+```
+
+5. Reload NGINX
+    - For example: `sudo nginx -t && sudo nginx -s reload`
+
 ## Theming
 
 > [!IMPORTANT]
@@ -30,25 +57,8 @@ The [Pumpkin theme](https://picocss.com/docs/version-picker/pumpkin) is used by 
 > If you know what you're doing, it's recommended to grab the corresponding theme from [jsDelivr](https://www.jsdelivr.com/package/npm/@picocss/pico?tab=files&path=css) and use [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) to ensure the file hasn't been tampered with when loading into your page.  
 > Find the corresponding `pico.<theme>.min.css` file, click on the "Copy to clipboard" icon and select "Copy HTML + SRI".
 
-## Installation
+## How does this work?
 
-1. Clone this repository to your server.
-2. Copy the `_autoindex` directory to the root of your website.
-3. Add the following to your NGINX configuration file:
-
-```nginx
-# Note that `/media` should be replaced with the directory you want to enable AutoIndex Plus on.
-location ~ /media(.*)/$ {
-    autoindex on;
-    autoindex_format json;
-    addition_types application/json;
-
-    add_before_body /_autoindex/_header.html;
-    add_after_body /_autoindex/_footer.html;
-
-    add_header Content-Type "text/html; charset=utf-8";
-}
-```
-
-4. Reload NGINX
-    - For example: `sudo nginx -t && sudo nginx -s reload`
+NGINX supports outputting the autoindex as a JSON object.  
+Normally this would quite literally just be a JSON response in your browser, but we use the addition module to put HTML/JavaScript before and 
+after the JSON response, which then parses the JSON and renders the directory listing.

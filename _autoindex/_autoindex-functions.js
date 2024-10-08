@@ -39,6 +39,7 @@ const AUTOINDEX_CONFIG_DEFAULTS = {
         text: 'fa-file-lines',
         video: 'fa-video',
     },
+    ignoreEntries: ['_autoindex'],
     dateTimeLocale: null,
     showCredits: false,
 };
@@ -122,14 +123,27 @@ function mergeConfigs(defaultConfig, userConfig)
     const merged = {};
     for (const key in defaultConfig) {
         const defaults = defaultConfig[key];
-        const user = userConfig[key];
+
+        // If the key doesn't exist in the user config, fall back to the default
+        if (!Object.hasOwnProperty.call(userConfig, key)) {
+            merged[key] = defaults;
+            continue;
+        }
+
+        let user = userConfig[key];
 
         if (defaults === null || typeof defaults === 'undefined') {
-            merged[key] = user;
+            merged[key] = user || null;
             continue;
         }
 
         if (Array.isArray(defaults)) {
+            if (!Array.isArray(user)) {
+                console.log('User config for', key, 'is not an array. Using default values.');
+                merged[key] = defaults;
+                continue;
+            }
+
             merged[key] = [...defaults, ...user];
             // Remove duplicates
             merged[key] = [...new Set(merged[key])];
@@ -137,6 +151,12 @@ function mergeConfigs(defaultConfig, userConfig)
         }
 
         if (typeof defaults === 'object') {
+            if (typeof user !== 'object') {
+                console.log('User config for', key, 'is not an object. Using default values.');
+                merged[key] = defaults;
+                continue;
+            }
+
             merged[key] = mergeConfigs(defaults, user);
             continue;
         }
@@ -301,7 +321,12 @@ function setupTable(autoindexData, config)
         timeStyle: 'short',
     };
 
+    const ignoreEntries = Array.isArray(config.ignoreEntries) ? config.ignoreEntries : [];
     for (const file of autoindexData) {
+        if (ignoreEntries.includes(file.name)) {
+            continue;
+        }
+
         const row = document.createElement('tr');
         const name = document.createElement('td');
         const link = document.createElement('a');
