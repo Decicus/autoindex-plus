@@ -25,10 +25,39 @@ AutoIndex Plus is an alternative to the default autoindex module of NGINX. It's 
 4. Add the following to your NGINX configuration file:
 
 ```nginx
-# Note that `/media` should be replaced with the directory you want to enable AutoIndex Plus on.
-# The preceding `~` is a regex match, so it will match `/media`, `/media/`, `/media/anything`, etc.
-# The trailing `(.*)/$` is a regex capture group, which will capture all directories inside `/media`. This is necessary to make the autoindex work properly on subdirectories.
-location ~ /media(.*)/$ {
+# Note that `/my/media` should be replaced with the directory you want to enable AutoIndex Plus on.
+# The preceding `~` is a regex match, so it will match `/my/media`, `/my/media/`, `/my/media/anything`, etc.
+# The trailing `(.*)/$` is a regex capture group, which will capture all directories inside `/my/media`. This is necessary to make the autoindex work properly on sub-directories.
+location ~ /my/media(.*)/$ {
+    autoindex on;
+    autoindex_format json;
+    addition_types application/json;
+
+    add_before_body /_autoindex/_header.html;
+    add_after_body /_autoindex/_footer.html;
+
+    add_header Content-Type "text/html; charset=utf-8";
+}
+```
+
+```nginx
+# If you want to enable AutoIndex Plus on the root directory, you can use the following examples instead.
+# This block ensures it works on the just the actual root directory.
+location ~ /$ {
+    autoindex on;
+    autoindex_format json;
+    addition_types application/json;
+
+    add_before_body /_autoindex/_header.html;
+    add_after_body /_autoindex/_footer.html;
+
+    add_header Content-Type "text/html; charset=utf-8";
+}
+
+# This block ensures it works on all sub-directories as well, but only directories.
+# From my testing, `location /` would cause some oddities with mime types on certain files (mostly text files).
+# Suggestions on how to improve this are welcome.
+location ~ /(.*)/$ {
     autoindex on;
     autoindex_format json;
     addition_types application/json;
