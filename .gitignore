@@ -4,4 +4,6 @@
 _autoindex/_autoindex-config.js
 
 !README.md
+!LICENSE
+!.editorconfig
 !.gitignore
