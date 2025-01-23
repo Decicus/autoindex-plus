@@ -64,7 +64,7 @@ const AUTOINDEX_CONFIG = {
      * Locale used for date and time formatting.
      * By default, the browser locale of the visitor is used.
      *
-     * However you can use this option to force a specific one, such as `en-US` or `nb-NO`.
+     * However you can use this option to force a specific one, such as `'en-US'` or `'nb-NO'`.
      * Unless you have very specific reasons to not do so, I recommend leaving this to the default of `null`.
      */
     dateTimeLocale: null,

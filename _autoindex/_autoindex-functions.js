@@ -321,16 +321,27 @@ function setupTable(autoindexData, config)
         timeStyle: 'short',
     };
 
+    let directoryCount = 0;
+    let fileCount = 0;
+
     const ignoreEntries = Array.isArray(config.ignoreEntries) ? config.ignoreEntries : [];
-    for (const file of autoindexData) {
-        if (ignoreEntries.includes(file.name)) {
+    for (const entry of autoindexData) {
+        if (ignoreEntries.includes(entry.name)) {
             continue;
+        }
+
+        const isFile = entry.hasOwnProperty('size');
+        if (isFile) {
+            fileCount++;
+        }
+        else {
+            directoryCount++;
         }
 
         const row = document.createElement('tr');
         const name = document.createElement('td');
         const link = document.createElement('a');
-        const filename = file.name;
+        const filename = entry.name;
 
         name.setAttribute(sortAttribute, filename);
 
@@ -342,25 +353,26 @@ function setupTable(autoindexData, config)
          */
         const icon = document.createElement('i');
         icon.className = 'fa-solid fa-fw';
-        icon.classList.add(resolveFileIcon(config, file));
-        icon.setAttribute('style', 'margin-right: 0.25rem;');
+        icon.classList.add(resolveFileIcon(config, entry));
+        icon.classList.add('file-listing-entry-icon');
 
         link.prepend(icon);
         name.appendChild(link);
 
         // File size
         const size = document.createElement('td');
-        size.setAttribute(sortAttribute, file.size || 0);
+        size.setAttribute(sortAttribute, entry.size || 0);
         size.textContent = '';
-        const fileSize = file.size;
+        const fileSize = entry.size;
         if (fileSize) {
-            size.textContent = formatBytes(file.size);
+            size.textContent = formatBytes(entry.size);
         }
 
         // Last modified
         const modified = document.createElement('td');
-        const modifiedDate = new Date(file.mtime);
+        const modifiedDate = new Date(entry.mtime);
         modified.setAttribute(sortAttribute, modifiedDate.getTime());
+        modified.setAttribute('data-tooltip', entry.mtime);
         modified.textContent = Intl.DateTimeFormat(locale, localeOptions).format(modifiedDate);
 
         // Append the cells to the row
@@ -371,11 +383,29 @@ function setupTable(autoindexData, config)
         // Append the row to the table
         table.appendChild(row);
     }
+
+    /**
+     * Append total count of directories and files, to the footer
+     */
+    const countElement = document.querySelector('#total-count');
+    if (!countElement) {
+        return;
+    }
+
+    const totalDirectories = document.querySelector('#total-directories');
+    const totalFiles = document.querySelector('#total-files');
+
+    const directorySuffix = directoryCount === 1 ? 'directory' : 'directories';
+    totalDirectories.textContent = `${directoryCount} ${directorySuffix}`;
+
+    const fileSuffix = fileCount === 1 ? 'file' : 'files';
+    totalFiles.textContent = `${fileCount} ${fileSuffix}`;
+    countElement.classList.remove('hidden');
 }
 
 function showCredits()
 {
-    const credits = document.querySelector('#author-credits');
+    const credits = document.querySelector('#project-credits');
     credits.classList.remove('hidden');
 }
 
@@ -392,12 +422,11 @@ function autoIndexInit()
 
     const autoindexListing = document.querySelector('#autoindex-listing');
     let autoindexData = JSON.parse(autoindexListing.textContent);
-    // autoindexListing.remove();
+    autoindexListing.remove();
 
     let config = AUTOINDEX_CONFIG_DEFAULTS;
-    if (AUTOINDEX_CONFIG) {
+    if (typeof AUTOINDEX_CONFIG !== 'undefined') {
         config = mergeConfigs(AUTOINDEX_CONFIG_DEFAULTS, AUTOINDEX_CONFIG);
-        console.log('Resulting config', config);
     }
 
     const title = document.querySelector('title');
