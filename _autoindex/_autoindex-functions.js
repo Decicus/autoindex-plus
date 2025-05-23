@@ -324,6 +324,16 @@ function setupTable(autoindexData, config)
     let directoryCount = 0;
     let fileCount = 0;
 
+    /**
+     * There's no need to be able to "Go up one" if we're already at the top level
+     */
+    if (parseIndexPath() === '/') {
+        const goUpOne = document.querySelector('#go-up-one');
+        if (goUpOne) {
+            goUpOne.classList.add('hidden');
+        }
+    }
+
     const ignoreEntries = Array.isArray(config.ignoreEntries) ? config.ignoreEntries : [];
     for (const entry of autoindexData) {
         if (ignoreEntries.includes(entry.name)) {
