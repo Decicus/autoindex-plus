@@ -15,7 +15,7 @@ This project is still work in progress. While it is functional, there are still 
 
 - All of the logic for parsing and rendering the directory listing happens using frontend JavaScript. Browsers without JavaScript enabled will not be able to see the directory listing.
     - For my personal use case, this is a perfectly acceptable limitation. I don't expect people to be browsing with JavaScript disabled.
-- `_header.html` excepts all the other AutoIndex Plus files to be located under `/_autoindex` of the document root.
+- `_header.html` expects all the other AutoIndex Plus files to be located under `/_autoindex` of the document root.
     - I don't think there's any good way to get around this, besides either a rewrite rule in NGINX or by editing the HTML/JS files. The latter option would have to be re-applied on every update of AutoIndex Plus.
 
 ## Installation
@@ -28,7 +28,7 @@ This project is still work in progress. While it is functional, there are still 
 
 ```nginx
 # Note that `/my/media` should be replaced with the directory you want to enable AutoIndex Plus on.
-# The preceding `~` is a regex match, so it will match `/my/media`, `/my/media/`, `/my/media/anything`, etc.
+# The preceding `~` is a regex match, so it will match `/my/media/`, `/my/media/anything-here/`, `/my/media/anything-here/sub-directory/` etc.
 # The trailing `(.*)/$` is a regex capture group, which will capture all directories inside `/my/media`. This is necessary to make the autoindex work properly on sub-directories.
 location ~ /my/media(.*)/$ {
     autoindex on;
