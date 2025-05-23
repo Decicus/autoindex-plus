@@ -345,7 +345,7 @@ function setupTable(autoindexData, config)
 
         name.setAttribute(sortAttribute, filename);
 
-        link.href = filename;
+        link.href = encodeURIComponent(filename);
         link.textContent = filename;
 
         /**
